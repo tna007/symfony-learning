@@ -1,0 +1,16 @@
+{
+  "recipes": [
+    {
+    "id": 1,
+    "name": "avocado toast",
+    "ingredients": "avocado, bread",
+    "intructions": "bla, bla, bla"
+  },
+    {
+      "id": 2,
+      "name": "avocado toast another",
+      "ingredients": "avocado, bread",
+      "intructions": "bla, bla, bla"
+    }
+  ]
+}
