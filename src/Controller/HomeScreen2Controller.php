@@ -62,12 +62,70 @@ class HomeScreen2Controller extends AbstractController
         $resp = [];
         foreach ($recipes as $recipe) {
             $resp[] = array(
+                'id' => $recipe->getId(),
                 'name' => $recipe->getName(),
                 'ingredients' => $recipe->getIngredients(),
                 'difficulty' => $recipe->getDifficulty()
             );
         }
         return $this->json($resp);
+    }
+
+    #[Route('/recipe/find/{id}', name: 'find_recipe')]
+    public function findRecipe($id) {
+        $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
+
+        if (!$recipe) {
+            throw $this->createNotFoundException(
+                'No recipe found with the id ' . $id
+            );
+        } else {
+            return $this->json([
+                'id' => $recipe->getId(),
+                'name' => $recipe->getName(),
+                'ingredients' => $recipe->getIngredients(),
+                'difficulty' => $recipe->getDifficulty()
+            ]);
+        }
+
+    }
+
+    #[Route('/recipe/edit/{id}/{name}', name: 'edit_recipe')]
+    public  function editRecipe($id, $name) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
+
+        if (!$recipe) {
+            throw $this->createNotFoundException(
+                'No recipe found with the id ' . $id
+            );
+        } else {
+            $recipe->setName($name);
+            $entityManager->flush();
+
+            return $this->json([
+                'message' => 'Recipe id ' . $id . ' edited.'
+            ]);
+        }
+    }
+
+    #[Route('/recipe/remove/{id}', name: 'remove_recipe')]
+    public function removeRecipe($id) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
+
+        if (!$recipe) {
+            throw $this->createNotFoundException(
+                'No recipe found with the id ' . $id
+            );
+        } else {
+            $entityManager->remove($recipe);
+            $entityManager->flush();
+
+            return $this->json([
+                'message' => 'Recipe id ' . $id . ' removed.'
+            ]);
+        }
     }
 
 }
