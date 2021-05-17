@@ -38,11 +38,9 @@ class Recipe
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $direction;
-
-
 
     public function getId(): ?int
     {
@@ -102,7 +100,7 @@ class Recipe
         return $this->direction;
     }
 
-    public function setDirection(?string $direction): self
+    public function setDirection(string $direction): self
     {
         $this->direction = $direction;
 
