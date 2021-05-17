@@ -37,6 +37,16 @@ class Recipe
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $direction;
+
+    public function getId(): ?int
+    {
+        return $this->name;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -81,6 +91,18 @@ class Recipe
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getDirection(): ?string
+    {
+        return $this->direction;
+    }
+
+    public function setDirection(string $direction): self
+    {
+        $this->direction = $direction;
 
         return $this;
     }
