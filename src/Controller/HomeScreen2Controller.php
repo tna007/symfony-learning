@@ -77,7 +77,7 @@ class HomeScreen2Controller extends AbstractController
 
         if (!$recipe) {
             throw $this->createNotFoundException(
-                'No recipe found with the id ' . $id
+                "No recipe found with the id $id."
             );
         } else {
             return $this->json([
@@ -97,14 +97,14 @@ class HomeScreen2Controller extends AbstractController
 
         if (!$recipe) {
             throw $this->createNotFoundException(
-                'No recipe found with the id ' . $id
+                "No recipe found with the id $id."
             );
         } else {
             $recipe->setName($name);
             $entityManager->flush();
 
             return $this->json([
-                'message' => 'Recipe id ' . $id . ' edited.'
+                'message' => "Recipe id $id edited."
             ]);
         }
     }
@@ -116,14 +116,14 @@ class HomeScreen2Controller extends AbstractController
 
         if (!$recipe) {
             throw $this->createNotFoundException(
-                'No recipe found with the id ' . $id
+                "No recipe found with the id $id."
             );
         } else {
             $entityManager->remove($recipe);
             $entityManager->flush();
 
             return $this->json([
-                'message' => 'Recipe id ' . $id . ' removed.'
+                'message' => "Recipe id $id removed."
             ]);
         }
     }
