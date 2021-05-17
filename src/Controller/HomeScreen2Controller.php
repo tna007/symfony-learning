@@ -40,7 +40,7 @@ class HomeScreen2Controller extends AbstractController
         return $this->redirectToRoute("homepage");
     }
 
-    #[Route('/recipes/add', name: 'add_new_recipe', methods: ['GET'])]
+    #[Route('/recipes/add', name: 'add_new_recipe', methods: ['POST'])]
     public function addRecipe(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -48,6 +48,7 @@ class HomeScreen2Controller extends AbstractController
         $newRecipe-> setName($request->query->get('name'));
         $newRecipe-> setIngredients($request->query->get('ingredients'));
         $newRecipe-> setDifficulty($request->query->get('difficulty'));
+        $newRecipe-> setImage($request->query->get('image'));
 
         $entityManager->persist($newRecipe);
         $entityManager->flush();
@@ -65,7 +66,8 @@ class HomeScreen2Controller extends AbstractController
                 'id' => $recipe->getId(),
                 'name' => $recipe->getName(),
                 'ingredients' => $recipe->getIngredients(),
-                'difficulty' => $recipe->getDifficulty()
+                'difficulty' => $recipe->getDifficulty(),
+                'image' => $recipe->getImage()
             );
         }
         return $this->json($resp);
@@ -84,7 +86,8 @@ class HomeScreen2Controller extends AbstractController
                 'id' => $recipe->getId(),
                 'name' => $recipe->getName(),
                 'ingredients' => $recipe->getIngredients(),
-                'difficulty' => $recipe->getDifficulty()
+                'difficulty' => $recipe->getDifficulty(),
+                'image' => $recipe->getImage()
             ]);
         }
 
