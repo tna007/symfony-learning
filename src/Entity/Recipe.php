@@ -22,10 +22,6 @@ class Recipe
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $ingredients;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -37,15 +33,6 @@ class Recipe
      */
     private $image;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $direction;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getName(): ?string
     {
@@ -59,17 +46,7 @@ class Recipe
         return $this;
     }
 
-    public function getIngredients(): ?string
-    {
-        return $this->ingredients;
-    }
 
-    public function setIngredients(string $ingredients): self
-    {
-        $this->ingredients = $ingredients;
-
-        return $this;
-    }
 
     public function getDifficulty(): ?string
     {
@@ -95,16 +72,5 @@ class Recipe
         return $this;
     }
 
-    public function getDirection(): ?string
-    {
-        return $this->direction;
-    }
-
-    public function setDirection(string $direction): self
-    {
-        $this->direction = $direction;
-
-        return $this;
-    }
 
 }
