@@ -4,6 +4,8 @@ namespace App\Controller;
 
 
 
+use App\Entity\Ingredient;
+use App\Entity\Recipe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +56,28 @@ class HomeScreen2Controller extends AbstractController
         $entityManager->flush();
 
         return new Response("trying to add new recipe" . $newRecipe->getId());
+    }
+
+    #[Route('/recipes/test', name: 'test_new_recipe')]
+    public function testRecipe(): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $recipe = new Recipe();
+        $recipe-> setName('some recipe');
+        $recipe-> setDifficulty('easy');
+        $recipe-> setImage('some link');
+
+        $ingredient = new Ingredient();
+        $ingredient->setName('some ingredient');
+        $ingredient->setAmount('some amount');
+        $ingredient->setRecipe($recipe);
+
+        $entityManager->persist($ingredient);
+        $entityManager->persist($recipe);
+        $entityManager->flush();
+
+        return new Response("trying to add new recipe" . $recipe->getId() . " and new ingredient with id " . $ingredient->getId());
     }
 
     #[Route('/recipes/all', name: 'get_all_recipes')]
