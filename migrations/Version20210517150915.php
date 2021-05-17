@@ -21,7 +21,7 @@ final class Version20210517150915 extends AbstractMigration
     {
 //         this up() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE recipes');
-        $this->addSql('ALTER TABLE recipe ADD COLUMN direction VARCHAR(255) NULL');
+        $this->addSql('ALTER TABLE recipe ADD COLUMN direction VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
