@@ -44,7 +44,7 @@ class Recipe
 
     public function getId(): ?int
     {
-        return $this->name;
+        return $this->id;
     }
 
     public function getName(): ?string
