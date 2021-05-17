@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 
-use App\Entity\Recipe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +40,7 @@ class HomeScreen2Controller extends AbstractController
         return $this->redirectToRoute("homepage");
     }
 
-    #[Route('/recipes/add', name: 'add_new_recipe', methods: ['GET'])]
+    #[Route('/recipes/add', name: 'add_new_recipe', methods: ['POST'])]
     public function addRecipe(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
 
