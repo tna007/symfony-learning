@@ -35,6 +35,11 @@ class Recipe
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $ingredients = [];
+
 
     public function getDifficulty(): ?string
     {
@@ -56,6 +61,18 @@ class Recipe
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getIngredients(): ?array
+    {
+        return $this->ingredients;
+    }
+
+    public function setIngredients(array $ingredients): self
+    {
+        $this->ingredients = $ingredients;
 
         return $this;
     }
