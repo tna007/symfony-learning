@@ -43,46 +43,90 @@ class HomeScreen2Controller extends AbstractController
     }
 
     #[Route('/recipes/add', name: 'add_new_recipe', methods: ['POST'])]
-    public function addRecipe(Request $request) {
+    public function addRecipe(Request $request): Response
+    {
         $entityManager = $this->getDoctrine()->getManager();
 
         $newRecipe = new Recipe();
         $newRecipe-> setName($request->query->get('name'));
-        $newRecipe-> setIngredients($request->query->get('ingredients'));
         $newRecipe-> setDifficulty($request->query->get('difficulty'));
         $newRecipe-> setImage($request->query->get('image'));
-
-        $entityManager->persist($newRecipe);
-        $entityManager->flush();
-
-        return new Response("trying to add new recipe" . $newRecipe->getId());
-    }
-
-    #[Route('/recipes/test', name: 'test_new_recipe')]
-    public function testRecipe(): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $recipe = new Recipe();
-        $recipe-> setName('some recipe');
-        $recipe-> setDifficulty('easy');
-        $recipe-> setImage('some link');
 
         $ingredient = new Ingredient();
         $ingredient->setName('some ingredient');
         $ingredient->setAmount('some amount');
-        $ingredient->setRecipe($recipe);
+        $ingredient->setRecipe($newRecipe);
+
+        $ingredient2 = new Ingredient();
+        $ingredient2->setName('some ingredient 2');
+        $ingredient2->setAmount('some amount 2');
+        $ingredient2->setRecipe($newRecipe);
 
         $entityManager->persist($ingredient);
+        $entityManager->persist($newRecipe);
+        $entityManager->flush();
+
+        return new Response("trying to add new recipe with id " . $newRecipe->getId() ." and new ingredient with id " . "and " . $ingredient->getId());
+    }
+
+    #[Route('/recipes/test', name: 'test_new_recipe', methods: ['GET'])]
+    public function testRecipe(Request $request): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $recipe = new Recipe();
+        $recipe-> setName($request->query->get('name'));
+        $recipe-> setDifficulty($request->query->get('difficulty'));
+        $recipe-> setImage($request->query->get('image'));
+
+        $ingredient = new Ingredient();
+        $ingredient->setName($request->query->get('ingre-name'));
+        $ingredient->setAmount($request->query->get('amount'));
+
+//        $ingredient2 = new Ingredient();
+//        $ingredient2->setName('some ingredient 2');
+//        $ingredient2->setAmount('some amount 2');
+
+        $ingredient->setRecipe($recipe);
+//        $ingredient2->setRecipe($recipe);
+
+        $entityManager->persist($ingredient);
+//        $entityManager->persist($ingredient2);
         $entityManager->persist($recipe);
         $entityManager->flush();
 
-        return new Response("trying to add new recipe" . $recipe->getId() . " and new ingredient with id " . $ingredient->getId());
+        return new Response("trying to add new recipe with id " . $recipe->getId() . " and new ingredient with id " . $ingredient->getId());
+    }
+
+    #[Route('/test', name: 'test')]
+    public function testAdd(Request $request) {
+        $data = json_decode($request->getContent(), true);
+
+        $recipe = new Recipe();
+        $recipe->setName($data['name']);
+        $recipe->setImage($data['image']);
+        $recipe->setDifficulty($data['difficulty']);
+        $recipe->setIngredients($data['ingredients']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($recipe);
+        $manager->flush();
+
+        return new Response("trying to add new recipe with id " . $recipe->getId());
     }
 
     #[Route('/recipes/all', name: 'get_all_recipes')]
     public function getAllRecipe() {
         $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAll();
+//        $ingredients = $this->getDoctrine()->getRepository(Ingredient::class)->findAll();
+//
+//        $list = [];
+//        foreach ($ingredients as $ingredient) {
+//            $list[] = array(
+//                'name' => $ingredient->getName(),
+//                'amount' => $ingredient->getAmount()
+//            );
+//        }
 
         $resp = [];
         foreach ($recipes as $recipe) {
@@ -154,6 +198,7 @@ class HomeScreen2Controller extends AbstractController
             ]);
         }
     }
+
 
 }
 
