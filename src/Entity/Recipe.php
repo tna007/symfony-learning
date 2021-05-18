@@ -35,34 +35,6 @@ class Recipe
      */
     private $image;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe")
-     */
-    private $ingredients;
-
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
-
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-
 
     public function getDifficulty(): ?string
     {
@@ -84,36 +56,6 @@ class Recipe
     public function setImage(?string $image): self
     {
         $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Ingredient[]
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients[] = $ingredient;
-            $ingredient->setRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->removeElement($ingredient)) {
-            // set the owning side to null (unless already changed)
-            if ($ingredient->getRecipe() === $this) {
-                $ingredient->setRecipe(null);
-            }
-        }
 
         return $this;
     }
