@@ -140,19 +140,19 @@ class HomeScreen2Controller extends AbstractController
 //        $ingredients->setIngredientName($request->request->get('name'));
 //        $ingredients->setAmount($request->request->get('amount'));
 
-//        $directions = new Direction();
-//        for ($i=0; $i <= count($data['direction']); $i++) {
-//            $directions->setText($data['direction'][$i]['text']);
-//        }
-//        $directions->setRecipe($recipe);
-//        $directions->setText($data['direction']);
+        $directions = new Direction();
+        for ($i=0; $i <= count($data['direction']); $i++) {
+            $directions->setText($data['direction'][$i]['text']);
+        }
+        $directions->setRecipe($recipe);
+        $directions->setText($data['direction']);
 //        $directions->setText($request->request->get('text'));
 
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($recipe);
 //        $manager->persist($ingredients);
-//        $manager->persist($directions);
+        $manager->persist($directions);
         $manager->flush();
 //
 //        return new Response("trying to add new recipe with id " . $recipe->getId() . ' and ingredient with id ' . $ingredients->getId() . $directions->getId());
