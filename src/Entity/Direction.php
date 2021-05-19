@@ -22,6 +22,12 @@ class Direction
      */
     private $text;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="directions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +41,18 @@ class Direction
     public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }

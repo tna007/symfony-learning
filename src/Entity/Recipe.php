@@ -39,9 +39,15 @@ class Recipe
      */
     private $ingredients;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Direction::class, mappedBy="recipe")
+     */
+    private $directions;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
+        $this->directions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +115,36 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($ingredient->getRecipe() === $this) {
                 $ingredient->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Direction[]
+     */
+    public function getDirections(): Collection
+    {
+        return $this->directions;
+    }
+
+    public function addDirection(Direction $direction): self
+    {
+        if (!$this->directions->contains($direction)) {
+            $this->directions[] = $direction;
+            $direction->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDirection(Direction $direction): self
+    {
+        if ($this->directions->removeElement($direction)) {
+            // set the owning side to null (unless already changed)
+            if ($direction->getRecipe() === $this) {
+                $direction->setRecipe(null);
             }
         }
 

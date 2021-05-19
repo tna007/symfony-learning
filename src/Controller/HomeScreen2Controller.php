@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 
+use App\Entity\Direction;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
@@ -96,13 +97,28 @@ class HomeScreen2Controller extends AbstractController
         $ingredient3->setAmount('400g');
         $ingredient3->setRecipe($recipe);
 
+        $direction = new Direction();
+        $direction->setText('do something');
+        $direction->setRecipe($recipe);
+
+        $direction2 = new Direction();
+        $direction2->setText('do something 2');
+        $direction2->setRecipe($recipe);
+
+        $direction3 = new Direction();
+        $direction3->setText('do something 3');
+        $direction3->setRecipe($recipe);
+
         $entityManager->persist($ingredient);
         $entityManager->persist($ingredient2);
         $entityManager->persist($ingredient3);
         $entityManager->persist($recipe);
+        $entityManager->persist($direction);
+        $entityManager->persist($direction2);
+        $entityManager->persist($direction3);
         $entityManager->flush();
 
-        return new Response("trying to add new recipe with id " . $recipe->getId() . " and new ingredient with id " . $ingredient->getId(). " and " . $ingredient2->getId() . " and " . $ingredient3->getId() );
+        return new Response("trying to add new recipe with id " . $recipe->getId() . " and new ingredient with id " . $ingredient->getId(). " and " . $ingredient2->getId() . " and " . $ingredient3->getId() . " and new directions " . $direction->getId() . $direction2->getId() . $direction3->getId() );
     }
 
     #[Route('/test', name: 'test')]
@@ -129,7 +145,9 @@ class HomeScreen2Controller extends AbstractController
 
         foreach ($recipes as $recipe) {
             $ingredients = $this->getDoctrine()->getRepository(Ingredient::class)->findBy(['recipe'=>$recipe]);
+            $directions = $this->getDoctrine()->getRepository(Direction::class)->findBy(['recipe'=>$recipe]);
             $list = [];
+            $instruction = [];
 
             foreach ($ingredients as $ingredient) {
                 $list[] = array(
@@ -137,13 +155,19 @@ class HomeScreen2Controller extends AbstractController
                     'amount' => $ingredient->getAmount()
                 );
             }
-
+            foreach ($directions as $direction) {
+                $instruction[] = array(
+                    'step' => $direction->getId(),
+                    'text' => $direction->getText()
+                );
+            }
             $resp[] = array(
                 'id' => $recipe->getId(),
                 'name' => $recipe->getName(),
                 'ingredients' => $list,
                 'difficulty' => $recipe->getDifficulty(),
-                'image' => $recipe->getImage()
+                'image' => $recipe->getImage(),
+                'direction' => $instruction
             );
         }
         return $this->json($resp);
