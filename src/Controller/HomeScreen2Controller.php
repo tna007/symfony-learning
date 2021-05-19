@@ -123,36 +123,36 @@ class HomeScreen2Controller extends AbstractController
 
     #[Route('/test', name: 'test')]
     public function testAdd(Request $request) {
-//        $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
 
         $recipe = new Recipe();
-//        $recipe->setName($data['name']);
-//        $recipe->setImage($data['image']);
-//        $recipe->setDifficulty($data['difficulty']);
-        $recipe->setName($request->request->get('name'));
-        $recipe->setImage($request->request->get('image'));
-        $recipe->setDifficulty($request->request->get('difficulty'));
+        $recipe->setName($data['name']);
+        $recipe->setImage($data['image']);
+        $recipe->setDifficulty($data['difficulty']);
+//        $recipe->setName($request->request->get('name'));
+//        $recipe->setImage($request->request->get('image'));
+//        $recipe->setDifficulty($request->request->get('difficulty'));
 
-        $ingredients = new Ingredient();
+//        $ingredients = new Ingredient();
 //        $ingredients->setIngredientName($data['ingredientName']);
 //        $ingredients->setAmount($data['amount']);
-        $ingredients->setRecipe($recipe);
-        $ingredients->setIngredientName($request->request->get('name'));
-        $ingredients->setAmount($request->request->get('amount'));
+//        $ingredients->setRecipe($recipe);
+//        $ingredients->setIngredientName($request->request->get('name'));
+//        $ingredients->setAmount($request->request->get('amount'));
 
-        $directions = new Direction();
+//        $directions = new Direction();
 //        for ($i=0; $i <= count($data['direction']); $i++) {
 //            $directions->setText($data['direction'][$i]['text']);
 //        }
-        $directions->setRecipe($recipe);
+//        $directions->setRecipe($recipe);
 //        $directions->setText($data['direction']);
-        $directions->setText($request->request->get('text'));
+//        $directions->setText($request->request->get('text'));
 
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($recipe);
-        $manager->persist($ingredients);
-        $manager->persist($directions);
+//        $manager->persist($ingredients);
+//        $manager->persist($directions);
         $manager->flush();
 //
 //        return new Response("trying to add new recipe with id " . $recipe->getId() . ' and ingredient with id ' . $ingredients->getId() . $directions->getId());
