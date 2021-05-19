@@ -121,7 +121,7 @@ class HomeScreen2Controller extends AbstractController
         return new Response("trying to add new recipe with id " . $recipe->getId() . " and new ingredient with id " . $ingredient->getId(). " and " . $ingredient2->getId() . " and " . $ingredient3->getId() . " and new directions " . $direction->getId() . $direction2->getId() . $direction3->getId() );
     }
 
-    #[Route('/test', name: 'test')]
+    #[Route('/test', name: 'test', methods: ['POST'])]
     public function testAdd(Request $request) {
         $data = json_decode($request->getContent(), true);
 
@@ -129,10 +129,21 @@ class HomeScreen2Controller extends AbstractController
         $recipe->setName($data['name']);
         $recipe->setImage($data['image']);
         $recipe->setDifficulty($data['difficulty']);
-        $recipe->setIngredients($data['ingredients']);
+
+        $ingredients = new Ingredient();
+        $ingredients->setIngredientName($data['ingredientName']);
+        $ingredients->setAmount($data['amount']);
+        $ingredients->setRecipe($recipe);
+
+        $directions = new Direction();
+        $directions->setText($data['text']);
+        $directions->setRecipe($recipe);
+
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($recipe);
+        $manager->persist($ingredients);
+        $manager->persist($directions);
         $manager->flush();
 
         return new Response("trying to add new recipe with id " . $recipe->getId());
