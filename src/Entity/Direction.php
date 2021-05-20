@@ -62,15 +62,4 @@ class Direction
         return $this;
     }
 
-    public function getStep(): ?string
-    {
-        return $this->step;
-    }
-
-    public function setStep(string $step): self
-    {
-        $this->step = $step;
-
-        return $this;
-    }
 }
