@@ -32,7 +32,7 @@ class HomeScreen2Controller extends AbstractController
         ]);
     }
 
-    #[Route('/recipes', name: 'all_recipes', methods: ['GET'])]
+    #[Route('/recipes/all', name: 'all_recipes', methods: ['GET'])]
     public function getAllRecipes() {
         $rootPath = $this->getParameter('kernel.project_dir');
         $recipes = file_get_contents($rootPath.'/resources/recipes.json');
@@ -103,7 +103,7 @@ class HomeScreen2Controller extends AbstractController
 //        return $this->json($data);
     }
 
-    #[Route('/recipes/all', name: 'get_all_recipes')]
+    #[Route('/recipes', name: 'get_all_recipes')]
     public function getAllRecipe() {
         $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAll();
         $resp = [];
