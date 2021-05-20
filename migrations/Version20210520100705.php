@@ -23,7 +23,7 @@ final class Version20210520100705 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_3E4AD1B359D8A214');
         $this->addSql('CREATE TEMPORARY TABLE __temp__direction AS SELECT id, recipe_id, text FROM direction');
         $this->addSql('DROP TABLE direction');
-        $this->addSql('CREATE TABLE direction (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recipe_id INTEGER NOT NULL, text VARCHAR(255) NOT NULL COLLATE BINARY, step VARCHAR(20) NOT NULL, CONSTRAINT FK_3E4AD1B359D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE direction (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recipe_id INTEGER NOT NULL, text VARCHAR(255) NOT NULL COLLATE BINARY, step VARCHAR(20) NULL, CONSTRAINT FK_3E4AD1B359D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO direction (id, recipe_id, text) SELECT id, recipe_id, text FROM __temp__direction');
         $this->addSql('DROP TABLE __temp__direction');
         $this->addSql('CREATE INDEX IDX_3E4AD1B359D8A214 ON direction (recipe_id)');
