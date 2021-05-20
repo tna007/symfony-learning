@@ -90,7 +90,7 @@ class HomeScreen2Controller extends AbstractController
             $manager->persist($ingredient);
         }
 
-            for ($i=0; $i <= count($data['direction']); $i++) {
+            for ($i=0; $i < count($data['direction']); $i++) {
                 $direction = new Direction();
                 $direction->setText($data['direction'][$i]['text']);
                 $direction->setStep($i++);
