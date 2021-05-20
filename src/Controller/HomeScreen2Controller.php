@@ -197,7 +197,7 @@ class HomeScreen2Controller extends AbstractController
     public function removeRecipe($id) {
         $entityManager = $this->getDoctrine()->getManager();
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
-        $ingredient = $this->getDoctrine()->getRepository(Ingredient::class)->findBy(['recipe'=>$recipe]);
+        $ingredient = $this->getDoctrine()->getRepository(Ingredient::class)->findOneBy($recipe);
 
         if (!$recipe) {
             throw $this->createNotFoundException(
