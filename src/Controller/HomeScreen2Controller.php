@@ -138,7 +138,7 @@ class HomeScreen2Controller extends AbstractController
         return $this->json($resp);
     }
 
-    #[Route('/recipe/find/{id}', name: 'find_recipe')]
+    #[Route('/recipes/{id}', name: 'find_recipe')]
     public function findRecipe($id) {
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
         $ingredients = $this->getDoctrine()->getRepository(Ingredient::class)->findBy(['recipe'=>$recipe]);
