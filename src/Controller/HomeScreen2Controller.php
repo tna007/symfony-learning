@@ -143,14 +143,19 @@ class HomeScreen2Controller extends AbstractController
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
         $ingredients = $this->getDoctrine()->getRepository(Ingredient::class)->findBy(['recipe'=>$recipe]);
         $list = [];
-
+        $instruction = [];
         foreach ($ingredients as $ingredient) {
             $list[] = array(
                 'ingredientName' => $ingredient->getIngredientName(),
                 'amount' => $ingredient->getAmount()
             );
         }
-
+        foreach ($directions as $direction) {
+            $instruction[] = array(
+                'step' => $direction->getId(),
+                'text' => $direction->getText()
+            );
+        }
         if (!$recipe) {
             throw $this->createNotFoundException(
                 "No recipe found with the id $id."
@@ -161,7 +166,8 @@ class HomeScreen2Controller extends AbstractController
                 'name' => $recipe->getName(),
                 'ingredients' => $list,
                 'difficulty' => $recipe->getDifficulty(),
-                'image' => $recipe->getImage()
+                'image' => $recipe->getImage(),
+                'direction' => $instruction
             ]);
         }
 
