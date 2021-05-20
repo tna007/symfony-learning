@@ -23,7 +23,7 @@ class Ingredient
     private $ingredientName;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
      */
     private $amount;
 

@@ -90,18 +90,17 @@ class HomeScreen2Controller extends AbstractController
             $manager->persist($ingredient);
         }
 
-            for ($i=0; $i < count($data['direction']); $i++) {
-                $direction = new Direction();
-                $direction->setText($data['direction'][$i]['text']);
-                $direction->setStep($i++);
-                $direction->setRecipe($recipe);
-                $manager->persist($direction);
-            }
+        for ($i = 0; $i < count($data['direction']); $i++) {
+            $direction = new Direction();
+            $direction->setText($data['direction'][$i]['text']);
+            $direction->setRecipe($recipe);
+            $manager->persist($direction);
+        }
 
         $manager->persist($recipe);
         $manager->flush();
         return new Response ("trying to add new recipe with id " .$recipe->getId());
-//        return $this->json($request->getContent());
+//        return $this->json($data);
     }
 
     #[Route('/recipes/all', name: 'get_all_recipes')]

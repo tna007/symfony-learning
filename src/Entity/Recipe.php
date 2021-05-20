@@ -25,7 +25,7 @@ class Recipe
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $difficulty;
 
