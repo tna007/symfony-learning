@@ -18,6 +18,11 @@ class Direction
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $step;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $text;
@@ -28,14 +33,21 @@ class Direction
      */
     private $recipe;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $step;
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getStep(): ?string
+    {
+        return $this->step;
+    }
+
+    public function setStep(string $step): self
+    {
+        $this->step = $step;
+
+        return $this;
     }
 
     public function getText(): ?string
@@ -61,5 +73,4 @@ class Direction
 
         return $this;
     }
-
 }

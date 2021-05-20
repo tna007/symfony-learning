@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 
-
 use App\Entity\Direction;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
@@ -82,9 +81,6 @@ class HomeScreen2Controller extends AbstractController
         $recipe->setName($data['name']);
         $recipe->setImage($data['image']);
         $recipe->setDifficulty($data['difficulty']);
-//        $recipe->setName($request->request->get('name'));
-//        $recipe->setImage($request->request->get('image'));
-//        $recipe->setDifficulty($request->request->get('difficulty'));
 
         for ($i=0; $i < count($data['ingredients']); $i++) {
             $ingredient = new Ingredient();
@@ -93,21 +89,19 @@ class HomeScreen2Controller extends AbstractController
             $ingredient->setRecipe($recipe);
             $manager->persist($ingredient);
         }
-//        $ingredients->setIngredientName($request->request->get('name'));
-//        $ingredients->setAmount($request->request->get('amount'));
 
             for ($i=0; $i < count($data['direction']); $i++) {
                 $direction = new Direction();
                 $direction->setText($data['direction'][$i]['text']);
+                $direction->setStep($i++);
                 $direction->setRecipe($recipe);
                 $manager->persist($direction);
             }
 
-//        $directions->setText($request->request->get('text'));
-
         $manager->persist($recipe);
         $manager->flush();
         return new Response ("trying to add new recipe with id " .$recipe->getId());
+//        return $this->json($request->getContent());
     }
 
     #[Route('/recipes/all', name: 'get_all_recipes')]
