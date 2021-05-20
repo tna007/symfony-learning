@@ -142,6 +142,7 @@ class HomeScreen2Controller extends AbstractController
     public function findRecipe($id) {
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
         $ingredients = $this->getDoctrine()->getRepository(Ingredient::class)->findBy(['recipe'=>$recipe]);
+        $directions = $this->getDoctrine()->getRepository(Direction::class)->findBy(['recipe'=>$recipe]);
         $list = [];
         $instruction = [];
         foreach ($ingredients as $ingredient) {
