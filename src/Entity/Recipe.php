@@ -35,7 +35,7 @@ class Recipe
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe", orphanRemoval=true)
      */
     private $ingredients;
 
