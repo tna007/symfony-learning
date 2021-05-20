@@ -73,57 +73,8 @@ class HomeScreen2Controller extends AbstractController
         return new Response("trying to add new recipe with id " . $newRecipe->getId() ." and new ingredient with id " . "and " . $ingredient->getId());
     }
 
-    #[Route('/recipes/test', name: 'test_new_recipe')]
-    public function testRecipe(Request $request): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $recipe = new Recipe();
-        $recipe-> setName('blueberry pie');
-        $recipe-> setDifficulty('medium');
-        $recipe-> setImage('some png');
-
-        $ingredient = new Ingredient();
-        $ingredient->setIngredientName('blueberry');
-        $ingredient->setAmount('1kg');
-        $ingredient->setRecipe($recipe);
-
-        $ingredient2 = new Ingredient();
-        $ingredient2->setIngredientName('flour');
-        $ingredient2->setAmount('500g');
-        $ingredient2->setRecipe($recipe);
-
-        $ingredient3 = new Ingredient();
-        $ingredient3->setIngredientName('sugar');
-        $ingredient3->setAmount('400g');
-        $ingredient3->setRecipe($recipe);
-
-        $direction = new Direction();
-        $direction->setText('do something');
-        $direction->setRecipe($recipe);
-
-        $direction2 = new Direction();
-        $direction2->setText('do something 2');
-        $direction2->setRecipe($recipe);
-
-        $direction3 = new Direction();
-        $direction3->setText('do something 3');
-        $direction3->setRecipe($recipe);
-
-        $entityManager->persist($ingredient);
-        $entityManager->persist($ingredient2);
-        $entityManager->persist($ingredient3);
-        $entityManager->persist($recipe);
-        $entityManager->persist($direction);
-        $entityManager->persist($direction2);
-        $entityManager->persist($direction3);
-        $entityManager->flush();
-
-        return new Response("trying to add new recipe with id " . $recipe->getId() . " and new ingredient with id " . $ingredient->getId(). " and " . $ingredient2->getId() . " and " . $ingredient3->getId() . " and new directions " . $direction->getId() . $direction2->getId() . $direction3->getId() );
-    }
-
-    #[Route('/test', name: 'test', methods: ['POST'])]
-    public function testAdd(Request $request) {
+    #[Route('/add', name: 'add_new_recipe', methods: ['POST'])]
+    public function addNewRecipe(Request $request) {
         $manager = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent(), true);
 
@@ -144,8 +95,6 @@ class HomeScreen2Controller extends AbstractController
         }
 //        $ingredients->setIngredientName($request->request->get('name'));
 //        $ingredients->setAmount($request->request->get('amount'));
-
-
 
             for ($i=0; $i < count($data['direction']); $i++) {
                 $direction = new Direction();
