@@ -8,6 +8,7 @@ use App\Entity\Direction;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
+use PhpParser\Node\Scalar\MagicConst\Dir;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -121,8 +122,9 @@ class HomeScreen2Controller extends AbstractController
         return new Response("trying to add new recipe with id " . $recipe->getId() . " and new ingredient with id " . $ingredient->getId(). " and " . $ingredient2->getId() . " and " . $ingredient3->getId() . " and new directions " . $direction->getId() . $direction2->getId() . $direction3->getId() );
     }
 
-    #[Route('/test', name: 'test')]
+    #[Route('/test', name: 'test', methods: ['POST'])]
     public function testAdd(Request $request) {
+        $manager = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent(), true);
 
         $recipe = new Recipe();
@@ -133,31 +135,30 @@ class HomeScreen2Controller extends AbstractController
 //        $recipe->setImage($request->request->get('image'));
 //        $recipe->setDifficulty($request->request->get('difficulty'));
 
-//        $ingredients = new Ingredient();
-//        $ingredients->setIngredientName($data['ingredientName']);
-//        $ingredients->setAmount($data['amount']);
-//        $ingredients->setRecipe($recipe);
+        for ($i=0; $i < count($data['ingredients']); $i++) {
+            $ingredient = new Ingredient();
+            $ingredient->setIngredientName($data['ingredients'][$i]['name']);
+            $ingredient->setAmount($data['ingredients'][$i]['amount']);
+            $ingredient->setRecipe($recipe);
+            $manager->persist($ingredient);
+        }
 //        $ingredients->setIngredientName($request->request->get('name'));
 //        $ingredients->setAmount($request->request->get('amount'));
 
-        $directions = new Direction();
-        for ($i=0; $i <= count($data['direction']); $i++) {
-            $directions->setText($data['direction'][$i]['text']);
-        }
-        $directions->setRecipe($recipe);
-        $directions->setText($data['direction']);
+
+
+            for ($i=0; $i < count($data['direction']); $i++) {
+                $direction = new Direction();
+                $direction->setText($data['direction'][$i]['text']);
+                $direction->setRecipe($recipe);
+                $manager->persist($direction);
+            }
+
 //        $directions->setText($request->request->get('text'));
 
-
-        $manager = $this->getDoctrine()->getManager();
         $manager->persist($recipe);
-//        $manager->persist($ingredients);
-        $manager->persist($directions);
         $manager->flush();
-//
-//        return new Response("trying to add new recipe with id " . $recipe->getId() . ' and ingredient with id ' . $ingredients->getId() . $directions->getId());
-
-        return new Response ($recipe->getId());
+        return new Response ("trying to add new recipe with id " .$recipe->getId());
     }
 
     #[Route('/recipes/all', name: 'get_all_recipes')]
