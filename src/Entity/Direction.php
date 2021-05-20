@@ -28,6 +28,11 @@ class Direction
      */
     private $recipe;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $step;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Direction
     public function setRecipe(?Recipe $recipe): self
     {
         $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    public function getStep(): ?string
+    {
+        return $this->step;
+    }
+
+    public function setStep(string $step): self
+    {
+        $this->step = $step;
 
         return $this;
     }
