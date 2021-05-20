@@ -40,7 +40,7 @@ class Recipe
     private $ingredients;
 
     /**
-     * @ORM\OneToMany(targetEntity=Direction::class, mappedBy="recipe",  2b741073387d71041ceb3aad5c4c53ec20800458)
+     * @ORM\OneToMany(targetEntity=Direction::class, mappedBy="recipe", orphanRemoval=true)
      */
     private $directions;
 
