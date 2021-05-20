@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Account;
 use App\Bank;
+use App\MortgagePayment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,11 +23,14 @@ class BankAccountController extends AbstractController
         $bank->addAccount($secondAccount);
         $bank->addAccount($thirdAccount);
 
-//        $bank->getAccountById('123478')->deposit(1000);
+        $bank->getAccountById('123478')->deposit(1000);
 //        $test = array('id' => $bank->getAccountById(123478));
 //        return $this->json($test);
 //
-//        $bank->getAccountById('123456')->withdraw(-10000);
+        $bank->getAccountById('123456')->withdraw(-10000);
+
+        $mortgagePayment = new MortgagePayment($firstAccount);
+        $mortgagePayment->makePayment(500);
 
         return $this->json([
             'id' => $bank->getAccountById(123456),

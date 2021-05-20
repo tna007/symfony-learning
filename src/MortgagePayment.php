@@ -6,7 +6,7 @@ namespace App;
 
 use App\Utils\BankAccountInterface;
 
-class MortagePayment
+class MortgagePayment
 {
     private BankAccountInterface $account;
 
